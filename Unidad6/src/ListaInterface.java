@@ -1,7 +1,7 @@
 
 import java.util.Arrays;
 
-public class ListaInterface implements ColaInterface, PilaInterface {
+public class ListaInterface implements ColaInterface, PilaInterface, ColaDobleInterface {
 
     Integer[] tabla;
 
@@ -120,5 +120,15 @@ public class ListaInterface implements ColaInterface, PilaInterface {
     @Override
     public boolean isEmpty() {
         return tabla.length == 0;
+    }
+
+    @Override
+    public void encolarPrincipio(Integer nuevo) {
+        insertarPrincipio(nuevo);
+    }
+
+    @Override
+    public Integer desencolarFinal() {
+        return desapilar();
     }
 }
