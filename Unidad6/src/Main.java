@@ -1,3 +1,6 @@
+
+import java.util.Scanner;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,12 +12,22 @@ public class Main {
 
     
     public static void main(String[] args) {
-         
-        Hora horita = new Hora(172,23);
-        
-        System.out.println(horita.toString());
-        
-        
+        Scanner scan = new Scanner(System.in);
+        ListaInterface listita = new ListaInterface();
+        System.out.println("Intorduce numero para encolar: ");
+        Integer n = scan.nextInt();
+        while(n>=0){
+            listita.encolar(n);
+            System.out.println("Intorduce numero para encolar: ");
+            n = scan.nextInt();
+        }
+        n=listita.desencolar();
+        while(n!=null){            
+            System.out.println("Desencolando: " + n);
+            n=listita.desencolar();
+        }
+        System.out.println("");
+              
     }
 
 }
