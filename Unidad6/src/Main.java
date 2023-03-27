@@ -14,7 +14,13 @@ public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         ListaInterface listita = new ListaInterface();
-        System.out.println("Intorduce numero para encolar: ");
+        System.out.println("Introduce veces para encolar: ");
+        int veces = scan.nextInt();
+        System.out.println("Introduce numero para encolar: ");
+        int numMultiple = scan.nextInt();
+        listita.encolarMultiple(veces, numMultiple);
+        System.out.println(listita.toString());
+        System.out.println("Introduce numero para encolar: ");
         Integer n = scan.nextInt();
         while(n>=0){
             listita.encolar(n);

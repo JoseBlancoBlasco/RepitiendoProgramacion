@@ -134,7 +134,7 @@ public class ListaInterface implements ColaInterface, PilaInterface, ColaDobleIn
 
     @Override
     public void encolarMultiple(int cantidad, Integer elemento) {
-        while (cantidad >= 0) {
+        while (cantidad > 0) {
             insertarFinal(elemento);
             cantidad--;
         }
