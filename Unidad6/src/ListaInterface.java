@@ -131,4 +131,12 @@ public class ListaInterface implements ColaInterface, PilaInterface, ColaDobleIn
     public Integer desencolarFinal() {
         return desapilar();
     }
+
+    @Override
+    public void encolarMultiple(int cantidad, Integer elemento) {
+        while (cantidad >= 0) {
+            insertarFinal(elemento);
+            cantidad--;
+        }
+    }
 }
