@@ -3,9 +3,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-
 public class Socio implements Comparable {
-    
+
     int id;
     String nombre;
     LocalDate fechaNacimiento;
@@ -13,13 +12,13 @@ public class Socio implements Comparable {
     public Socio(int id, String nombre, String fechaNacimiento) {
         this.id = id;
         this.nombre = nombre;
-        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd-mm-yyyy");
-        this.fechaNacimiento = LocalDate.parse(fechaNacimiento, f);
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        this.fechaNacimiento = LocalDate.parse(fechaNacimiento,f);
     }
-    
-    int edad(){
-        return (int) fechaNacimiento.until(LocalDate.now(),ChronoUnit.YEARS);
-    }    
+
+    int edad() {
+        return (int) fechaNacimiento.until(LocalDate.now(), ChronoUnit.YEARS);
+    }
 
     @Override
     public int compareTo(Object t) {
@@ -27,9 +26,9 @@ public class Socio implements Comparable {
         Socio otroSocio = (Socio) t;
         if (id < otroSocio.id) {
             resultado = -1;
-        }else if (id>otroSocio.id) {
+        } else if (id > otroSocio.id) {
             resultado = 1;
-        }else{
+        } else {
             resultado = 0;
         }
         return resultado;
@@ -37,9 +36,7 @@ public class Socio implements Comparable {
 
     @Override
     public String toString() {
-        return "Socio{" + "Id=" + id + ", Nombre=" + nombre + ", Edad=" + edad() + '}';
+        return "Socio{" + "Id=" + id + ", Nombre=" + nombre + ", Edad=" + edad() + '}' + "\n";
     }
-    
-    
-    
+
 }
