@@ -1,58 +1,54 @@
-public abstract class Sujeto implements Comparable<Sujeto> {
-
+public class Sujeto implements Comparable<Sujeto>, Movimiento {
     private int id;
-    private int vida;
-    private int monedas;
+    private int cantidadVida;
+    private int cantidadMonedas;
     private int posX;
     private int posY;
-    private int velocidad;
-
+    private int velocidadMovimiento;
+    
+    // Constructor vacío
     public Sujeto() {
-        this.id = 0;
-        this.vida = 0;
-        this.monedas = 0;
-        this.posX = 0;
-        this.posY = 0;
-        this.velocidad = 0;
     }
-
-    public Sujeto(int id, int vida, int monedas, int posX, int posY, int velocidad) {
+    
+    // Constructor con parámetros
+    public Sujeto(int id, int cantidadVida, int cantidadMonedas, int posX, int posY, int velocidadMovimiento) {
         this.id = id;
-        this.vida = vida;
-        this.monedas = monedas;
+        this.cantidadVida = cantidadVida;
+        this.cantidadMonedas = cantidadMonedas;
         this.posX = posX;
         this.posY = posY;
-        this.velocidad = velocidad;
+        this.velocidadMovimiento = velocidadMovimiento;
     }
-
+    
+    // Getters y setters
     public int getId() {
         return id;
     }
-
+    
     public void setId(int id) {
         this.id = id;
     }
-
-    public int getVida() {
-        return vida;
+    
+    public int getCantidadVida() {
+        return cantidadVida;
     }
-
-    public void setVida(int vida) {
-        this.vida = vida;
+    
+    public void setCantidadVida(int cantidadVida) {
+        this.cantidadVida = cantidadVida;
     }
-
-    public int getMonedas() {
-        return monedas;
+    
+    public int getCantidadMonedas() {
+        return cantidadMonedas;
     }
-
-    public void setMonedas(int monedas) {
-        this.monedas = monedas;
+    
+    public void setCantidadMonedas(int cantidadMonedas) {
+        this.cantidadMonedas = cantidadMonedas;
     }
-
+    
     public int getPosX() {
         return posX;
     }
-
+    
     public void setPosX(int posX) {
         this.posX = posX;
     }
@@ -63,49 +59,91 @@ public abstract class Sujeto implements Comparable<Sujeto> {
 
     public void setPosY(int posY) {
         this.posY = posY;
+    }    
+    
+    public int getVelocidadMovimiento() {
+        return velocidadMovimiento;
+    }
+    
+    public void setVelocidadMovimiento(int velocidadMovimiento) {
+        this.velocidadMovimiento = velocidadMovimiento;
+    }
+    
+    
+    
+    // Implementación del método equals()
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Sujeto other = (Sujeto) obj;
+        if (id != other.id) {
+            return false;
+        }
+        return true;
+    }
+    
+    // Implementación del método compareTo()
+    @Override
+    public int compareTo(Sujeto o) {
+        if (this.id == o.getId()) {
+            return 0;
+        } else if (this.id > o.getId()) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+    
+    public boolean subir() {
+        if (posY > 0) {
+            posY--;
+            return true;
+        }
+        return false;
     }
 
-    public int getVelocidad() {
-        return velocidad;
+    @Override
+    public boolean bajar() {
+        if (posY < 49) {
+            posY++;
+            return true;
+        }
+        return false;
     }
 
-    public void setVelocidad(int velocidad) {
-        this.velocidad = velocidad;
+    @Override
+    public boolean derecha() {
+        if (posX < 49) {
+            posX++;
+            return true;
+        }
+        return false;
     }
 
-    public String toString() {
-        return "Sujeto{" +
-                "id=" + id +
-                ", vida=" + vida +
-                ", monedas=" + monedas +
-                ", posX=" + posX +
-                ", posY=" + posY +
-                ", velocidad=" + velocidad +
-                '}';
+    @Override
+    public boolean izquierda() {
+        if (posX > 0) {
+            posX--;
+            return true;
+        }
+        return false;
     }
 
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Sujeto sujeto = (Sujeto) o;
-        return id == sujeto.id &&
-                vida == sujeto.vida &&
-                monedas == sujeto.monedas &&
-                posX == sujeto.posX &&
-                posY == sujeto.posY &&
-                velocidad == sujeto.velocidad;
+    @Override
+    public boolean irA(int posX, int posY) {
+        if (posX >= 0 && posY >= 0 && posX < 50 && posY < 50) {
+            this.posX = posX;
+            this.posY = posY;
+            return true;
+        }
+        return false;
     }
-
-    public int compareTo(Sujeto sujeto) {
-        return Integer.compare(this.id, sujeto.getId());
-    }
-
-    public abstract boolean subir();
-    public abstract boolean bajar();
-    public abstract boolean derecha();
-    public abstract boolean izquierda();
-    public abstract boolean irA(int posX, int posY);
-    public abstract int cobrar(int cantidad);
-    public abstract int pagar(int cantidad);
 }
-

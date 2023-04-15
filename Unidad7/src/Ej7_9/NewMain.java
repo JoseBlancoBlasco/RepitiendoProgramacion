@@ -49,13 +49,13 @@ public class NewMain {
                 validarApellido(apellido2Programador);
 
                 // Añadir el programador al equipo
-                Programador programador = new Programador(nombreProgramador, apellido1Programador, apellido2Programador);
+                Programador programador = new Programador(nombreProgramador, apellido1Programador);
                 equipo.incluirProgramador(programador);
 
-            } catch (NombreNoValidoException | ApellidoNoValidoException e) {
+            } catch (InvalidNombreException e) {
                 System.out.println(e.getMessage());
                 i--; // Volver a solicitar los datos del mismo programador
-            } catch (EquipoCompletoException e) {
+            } catch (EquipoLlenoException e) {
                 System.out.println(e.getMessage());
                 break; // Salir del bucle for
             }
@@ -66,15 +66,15 @@ public class NewMain {
         System.out.println(equipo.toString());
     }
 
-    public static void validarNombre(String nombre) throws NombreNoValidoException {
+    public static void validarNombre(String nombre) throws InvalidNombreException {
         if (!nombre.matches("^[a-zA-Z]{1,20}$")) {
-            throw new NombreNoValidoException("El nombre no es válido");
+            throw new InvalidNombreException("El nombre no es válido");
         }
     }
 
-    public static void validarApellido(String apellido) throws ApellidoNoValidoException {
+    public static void validarApellido(String apellido) throws InvalidNombreException {
         if (!apellido.matches("^[a-zA-Z]{1,20}$")) {
-            throw new ApellidoNoValidoException("El apellido no es válido");
+            throw new InvalidNombreException("El apellido no es válido");
         }
     }
 }
