@@ -1,14 +1,25 @@
 
 public class Recurso {
+
     private int cantidad;
-    private String tipo;
-    
-    public Recurso(){        
+    private TipoRecurso tipo;
+
+    public Recurso() {
     }
 
-    public Recurso(int cantidad, String tipo) {
+    public Recurso(int cantidad, TipoRecurso tipo) {
         this.cantidad = cantidad;
         this.tipo = tipo;
+    }
+
+    public int extraerRecurso(int cantidad) {
+        if (cantidad >= this.cantidad) {
+            this.cantidad -= cantidad;
+            return cantidad;
+        } else {
+            System.out.println("Recurso agotado!");
+            return 0;
+        }
     }
 
     public int getCantidad() {
@@ -19,13 +30,12 @@ public class Recurso {
         this.cantidad = cantidad;
     }
 
-    public String getTipo() {
+    public TipoRecurso getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoRecurso tipo) {
         this.tipo = tipo;
     }
-    
-    
+
 }
