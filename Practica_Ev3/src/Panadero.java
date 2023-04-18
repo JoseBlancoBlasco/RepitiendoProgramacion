@@ -112,10 +112,10 @@ public class Panadero extends Sujeto implements Dinero, Movimiento {
         if (recurso.getTipo() == TipoRecurso.HARINA 
                 && this.getCantidadRecursos()[7] >= cantidad
                 && sujeto.getCantidadMonedas() >= 2 * cantidad) {
-            this.monedas += 2 * cantidad;
+            this.agregarCantidadRecurso(4 * cantidad, 14);
             this.quitarCantidadRecurso(cantidad, 7);
-            sujeto.setCantidadMonedas(sujeto.getCantidadMonedas() - cantidad);
             sujeto.agregarCantidadRecurso(cantidad, 7);
+            sujeto.quitarCantidadRecurso(4 * cantidad, 14);
         } else {
             System.out.println("No trabajo ese recurso.");
         }

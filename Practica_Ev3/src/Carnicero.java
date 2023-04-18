@@ -1,16 +1,12 @@
 public class Carnicero extends Sujeto implements Dinero, Movimiento {
 
-    private int monedas;
-
     public Carnicero() {
         super();
-        this.monedas = 0;
     }
 
     public Carnicero(int id, int cantidadVida, int cantidadMonedas, int posX, int posY, int velocidadMovimiento,
             int[] cantidadRecursos, int monedas) {
-        super();        
-        this.monedas = monedas;
+        super();
     }    
 
     @Override
@@ -113,10 +109,10 @@ public class Carnicero extends Sujeto implements Dinero, Movimiento {
         if (recurso.getTipo() == TipoRecurso.CARNE 
                 && this.getCantidadRecursos()[4] >= cantidad
                 && sujeto.getCantidadMonedas() >= 5 * cantidad) {
-            this.monedas += 5 * cantidad;
+            this.agregarCantidadRecurso(5 * cantidad, 14);
             this.quitarCantidadRecurso(cantidad, 4);
-            sujeto.setCantidadMonedas(sujeto.getCantidadMonedas() - cantidad);
-            sujeto.agregarCantidadRecurso(cantidad, 11);
+            sujeto.agregarCantidadRecurso(cantidad, 4);
+            sujeto.quitarCantidadRecurso(5 * cantidad, 14);
         }else {
             System.out.println("No trabajo ese recurso.");
         }

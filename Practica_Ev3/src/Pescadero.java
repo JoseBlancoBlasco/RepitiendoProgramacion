@@ -1,26 +1,14 @@
 
 public class Pescadero extends Sujeto implements Dinero, Movimiento {
 
-    private int monedas;
-
     public Pescadero() {
-        super();        
-        this.monedas = 0;
+        super();
     }
 
     public Pescadero(int id, int cantidadVida, int cantidadMonedas, int posX, int posY, int velocidadMovimiento,
             int[] cantidadRecursos, int monedas) {
-        super();        
-        this.monedas = monedas;
+        super();
     }    
-
-    public int getMonedas() {
-        return monedas;
-    }
-
-    public void setMonedas(int monedas) {
-        this.monedas = monedas;
-    }
 
     @Override
     public boolean subir() {
@@ -143,17 +131,18 @@ public class Pescadero extends Sujeto implements Dinero, Movimiento {
         if (recurso.getTipo() == TipoRecurso.TRUCHAS 
                 && this.getCantidadRecursos()[12] >= cantidad
                 && sujeto.getCantidadMonedas() >= 5 * cantidad) {
-            this.monedas += 5 * cantidad;
+            this.agregarCantidadRecurso(5 * cantidad, 14);
             this.quitarCantidadRecurso(cantidad, 12);
-            sujeto.setCantidadMonedas(sujeto.getCantidadMonedas() - cantidad);
             sujeto.agregarCantidadRecurso(cantidad, 12);
+            sujeto.quitarCantidadRecurso(5 * cantidad, 14);            
+            
         } else if (recurso.getTipo() == TipoRecurso.CANGREJOS 
                 && this.getCantidadRecursos()[13] >= cantidad
                 && sujeto.getCantidadMonedas() >= 3 * cantidad) {
-            this.monedas += 3 * cantidad;
+            this.agregarCantidadRecurso(5 * cantidad, 14);
             this.quitarCantidadRecurso(cantidad, 13);
-            sujeto.setCantidadMonedas(sujeto.getCantidadMonedas() - cantidad);
             sujeto.agregarCantidadRecurso(cantidad, 13);
+            sujeto.quitarCantidadRecurso(5 * cantidad, 14);
         } else {
             System.out.println("No trabajo ese recurso.");
         }

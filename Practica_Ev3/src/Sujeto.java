@@ -9,8 +9,8 @@ public class Sujeto implements Comparable<Sujeto>, Movimiento {
     private int velocidadMovimiento;
     private int[] cantidadRecursos;
 
-    //[harina,pescado, oro, bosque, ganado, fruta, verdura, pan, madera, combustible, muebles, carne, truchas, cangrejos]
-    //    0      1      2      3       4      5       6      7      8         9          10      11      12        13
+    //[harina,pescado, oro, bosque, ganado, fruta, verdura, pan, madera, combustible, muebles, carne, truchas, cangrejos, monedas]
+    //    0      1      2      3       4      5       6      7      8         9          10      11      12        13       14
     
     public Sujeto() {
     }
@@ -22,7 +22,7 @@ public class Sujeto implements Comparable<Sujeto>, Movimiento {
         this.posX = posX;
         this.posY = posY;
         this.velocidadMovimiento = velocidadMovimiento;
-        this.cantidadRecursos = new int[14];
+        this.cantidadRecursos = new int[15];
     }
 
     // Getters y setters

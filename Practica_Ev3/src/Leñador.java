@@ -1,26 +1,14 @@
 
 public class Leñador extends Sujeto implements Dinero, Movimiento {
 
-    private int monedas;
-
     public Leñador() {
-        super();        
-        this.monedas = 0;
+        super();
     }
 
     public Leñador(int id, int cantidadVida, int cantidadMonedas, int posX, int posY, int velocidadMovimiento,
             int[] cantidadRecursos, int monedas) {
         super();        
-        this.monedas = monedas;
-    }    
-
-    public int getMonedas() {
-        return monedas;
-    }
-
-    public void setMonedas(int monedas) {
-        this.monedas = monedas;
-    }
+    }   
 
     @Override
     public boolean subir() {
@@ -97,15 +85,15 @@ public class Leñador extends Sujeto implements Dinero, Movimiento {
     }
 
     public int bosqueEnMadera(Sujeto sujeto, int cantidad) {
-        if (cantidad > 0 
-                && sujeto instanceof Leñador 
+        if (cantidad > 0
+                && sujeto instanceof Leñador
                 && sujeto.getCantidadRecursos()[3] >= cantidad) {
             int maderaObtenida = cantidad * 10;
             sujeto.quitarCantidadRecurso(cantidad, 3);
             this.agregarCantidadRecurso(maderaObtenida, 8);
             return maderaObtenida;
-        } else if (cantidad > 0 
-                && !(sujeto instanceof Leñador) 
+        } else if (cantidad > 0
+                && !(sujeto instanceof Leñador)
                 && sujeto.getCantidadRecursos()[3] >= cantidad) {
             int maderaObtenida = cantidad * 10;
             sujeto.quitarCantidadRecurso(cantidad, 3);
@@ -116,17 +104,17 @@ public class Leñador extends Sujeto implements Dinero, Movimiento {
             return 0;
         }
     }
-    
+
     public int bosqueEnCombustible(Sujeto sujeto, int cantidad) {
-        if (cantidad > 0 
-                && sujeto instanceof Leñador 
+        if (cantidad > 0
+                && sujeto instanceof Leñador
                 && sujeto.getCantidadRecursos()[3] >= cantidad) {
             int combustibleObtenido = cantidad * 10;
             sujeto.quitarCantidadRecurso(cantidad, 3);
             this.agregarCantidadRecurso(combustibleObtenido, 9);
             return combustibleObtenido;
-        } else if (cantidad > 0 
-                && !(sujeto instanceof Leñador) 
+        } else if (cantidad > 0
+                && !(sujeto instanceof Leñador)
                 && sujeto.getCantidadRecursos()[3] >= cantidad) {
             int combustibleObtenido = cantidad * 10;
             sujeto.quitarCantidadRecurso(cantidad, 3);
@@ -140,20 +128,20 @@ public class Leñador extends Sujeto implements Dinero, Movimiento {
 
     @Override
     public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad) {
-        if (recurso.getTipo() == TipoRecurso.MADERA 
+        if (recurso.getTipo() == TipoRecurso.MADERA
                 && this.getCantidadRecursos()[8] >= cantidad
                 && sujeto.getCantidadMonedas() >= 5 * cantidad) {
-            this.monedas += 5 * cantidad;
+            this.agregarCantidadRecurso(5 * cantidad, 14);
             this.quitarCantidadRecurso(cantidad, 8);
-            sujeto.setCantidadMonedas(sujeto.getCantidadMonedas() - cantidad);
             sujeto.agregarCantidadRecurso(cantidad, 8);
-        } else if (recurso.getTipo() == TipoRecurso.COMBUSTIBLE 
+            sujeto.quitarCantidadRecurso(5 * cantidad, 14);
+        } else if (recurso.getTipo() == TipoRecurso.COMBUSTIBLE
                 && this.getCantidadRecursos()[9] >= cantidad
                 && sujeto.getCantidadMonedas() >= 3 * cantidad) {
-            this.monedas += 3 * cantidad;
+            this.agregarCantidadRecurso(3 * cantidad, 14);
             this.quitarCantidadRecurso(cantidad, 9);
-            sujeto.setCantidadMonedas(sujeto.getCantidadMonedas() - cantidad);
             sujeto.agregarCantidadRecurso(cantidad, 9);
+            sujeto.quitarCantidadRecurso(3 * cantidad, 14);
         } else {
             System.out.println("No trabajo ese recurso.");
         }

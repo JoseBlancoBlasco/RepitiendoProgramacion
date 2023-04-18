@@ -1,17 +1,13 @@
 
-public class Herrero extends Sujeto implements Dinero, Movimiento {
-
-    private int monedas;
+public class Herrero extends Sujeto implements Dinero, Movimiento {    
 
     public Herrero() {
-        super();
-        this.monedas = 0;
+        super();        
     }
 
     public Herrero(int id, int cantidadVida, int cantidadMonedas, int posX, int posY, int velocidadMovimiento,
             int[] cantidadRecursos, int monedas) {
-        super();
-        this.monedas = monedas;
+        super();        
     }
 
     @Override
@@ -61,19 +57,21 @@ public class Herrero extends Sujeto implements Dinero, Movimiento {
     }    
 
     public int oroEnMonedas(Sujeto sujeto, int cantidad) {
-        if (cantidad > 0 && sujeto instanceof Herrero 
+        if (cantidad > 0 
+                && sujeto instanceof Herrero 
                 && this.getCantidadRecursos()[2] >= cantidad) {
             this.quitarCantidadRecurso(cantidad, 2);
-            int oroObtenido = cantidad * 10;
-            this.monedas += oroObtenido;
-            return oroObtenido;
-        } else if (cantidad > 0 && !(sujeto instanceof Herrero) 
+            int monedasObtenidas = cantidad * 10;
+            this.agregarCantidadRecurso(monedasObtenidas, 14);
+            return monedasObtenidas;
+        } else if (cantidad > 0 
+                && !(sujeto instanceof Herrero) 
                 && sujeto.getCantidadRecursos()[2] >= cantidad) {
-            sujeto.agregarCantidadRecurso(-cantidad, 2);
-            int oroObtenido = cantidad * 10;
-            this.monedas += 2; //impuesto por transformar
-            sujeto.agregarCantidadRecurso(oroObtenido - 2, 2);
-            return oroObtenido - 2;
+            sujeto.quitarCantidadRecurso(cantidad, 2);
+            int monedasObtenidas = cantidad * 10;
+            this.agregarCantidadRecurso(2, 14);; //impuesto por transformar
+            sujeto.agregarCantidadRecurso(monedasObtenidas - 2, 14);
+            return monedasObtenidas - 2;
         } else {
             return 0;
         }
@@ -81,25 +79,25 @@ public class Herrero extends Sujeto implements Dinero, Movimiento {
 
     public void recolectarRecurso(Recurso recurso) {
         switch (recurso.getTipo()) {
-            case "harina":
+            case HARINA:
                 agregarCantidadRecurso(1, 0);
                 break;
-            case "pescado":
+            case PEZ:
                 agregarCantidadRecurso(1, 1);
                 break;
-            case "oro":
+            case ORO:
                 agregarCantidadRecurso(5, 2);
                 break;
-            case "bosque":
+            case BOSQUE:
                 agregarCantidadRecurso(1, 3);
                 break;
-            case "ganado":
+            case GANADO:
                 agregarCantidadRecurso(1, 4);
                 break;
-            case "fruta":
+            case FRUTA:
                 agregarCantidadRecurso(1, 5);
                 break;
-            case "verdura":
+            case VERDURA:
                 agregarCantidadRecurso(1, 6);
                 break;
             default:
@@ -109,15 +107,16 @@ public class Herrero extends Sujeto implements Dinero, Movimiento {
     
     @Override
     public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad) {
-        if (recurso.getTipo().equals("oro") 
+        if (recurso.getTipo() == TipoRecurso.ORO
                 && this.getCantidadRecursos()[2] >= cantidad
                 && sujeto.getCantidadMonedas() >= 8 * cantidad) {
-            this.monedas += 8 * cantidad;
+            this.agregarCantidadRecurso(8 * cantidad, 14);            
             this.quitarCantidadRecurso(cantidad, 2);
             sujeto.agregarCantidadRecurso(cantidad, 2);
-            sujeto.setCantidadMonedas(sujeto.getCantidadMonedas() - cantidad);
+            sujeto.quitarCantidadRecurso(8 * cantidad, 14);            
         } else {
             System.out.println("No trabajo ese recurso.");
         }
-    }
+    }   
+    
 }

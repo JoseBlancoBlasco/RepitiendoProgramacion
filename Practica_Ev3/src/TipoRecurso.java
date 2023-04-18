@@ -13,5 +13,6 @@ public enum TipoRecurso {
     MUEBLES,
     CARNE,
     TRUCHAS,
-    CANGREJOS
+    CANGREJOS,
+    MONEDAS
 }

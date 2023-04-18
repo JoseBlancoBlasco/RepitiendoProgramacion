@@ -1,17 +1,13 @@
 
 public class Agricultor extends Sujeto implements Dinero, Movimiento {
-
-    private int monedas;
-
+    
     public Agricultor() {
         super();
-        this.monedas = 0;
     }
 
     public Agricultor(int id, int cantidadVida, int cantidadMonedas, int posX, int posY, int velocidadMovimiento,
             int[] cantidadRecursos, int monedas) {
-        super();        
-        this.monedas = monedas;
+        super();
     }    
 
     @Override
@@ -93,17 +89,17 @@ public class Agricultor extends Sujeto implements Dinero, Movimiento {
         if (recurso.getTipo() == TipoRecurso.FRUTA 
                 && this.getCantidadRecursos()[5] >= cantidad
                 && sujeto.getCantidadMonedas() >= 5 * cantidad) {
-            this.monedas += 5 * cantidad;
+            this.agregarCantidadRecurso(3 * cantidad, 14);
             this.quitarCantidadRecurso(cantidad, 5);
-            sujeto.setCantidadMonedas(sujeto.getCantidadMonedas() - cantidad);
             sujeto.agregarCantidadRecurso(cantidad, 5);
+            sujeto.quitarCantidadRecurso(3 * cantidad, 14);
         } else if (recurso.getTipo() == TipoRecurso.VERDURA
                 && this.getCantidadRecursos()[6] >= cantidad
                 && sujeto.getCantidadMonedas() >= 3 * cantidad) {
-            this.monedas += 3 * cantidad;
+            this.agregarCantidadRecurso(3 * cantidad, 14);
             this.quitarCantidadRecurso(cantidad, 6);
-            sujeto.setCantidadMonedas(sujeto.getCantidadMonedas() - cantidad);
             sujeto.agregarCantidadRecurso(cantidad, 6);
+            sujeto.quitarCantidadRecurso(3 * cantidad, 14);
         } else {
             System.out.println("No trabajo ese recurso.");
         }

@@ -1,17 +1,13 @@
 
 public class Carpintero extends Sujeto implements Dinero, Movimiento {
 
-    private int monedas;
-
     public Carpintero() {
-        super();
-        this.monedas = 0;
+        super();        
     }
 
     public Carpintero(int id, int cantidadVida, int cantidadMonedas, int posX, int posY, int velocidadMovimiento,
             int[] cantidadRecursos, int monedas) {
-        super();
-        this.monedas = monedas;
+        super();        
     }
 
     @Override
@@ -114,10 +110,10 @@ public class Carpintero extends Sujeto implements Dinero, Movimiento {
         if (recurso.getTipo() == TipoRecurso.MUEBLES
                 && this.getCantidadRecursos()[10] >= cantidad
                 && sujeto.getCantidadMonedas() >= 2 * cantidad) {
-            this.monedas += 2 * cantidad;
+            this.agregarCantidadRecurso(2 * cantidad, 14);
             this.quitarCantidadRecurso(cantidad, 10);
-            sujeto.setCantidadMonedas(sujeto.getCantidadMonedas() - cantidad);
             sujeto.agregarCantidadRecurso(cantidad, 10);
+            sujeto.quitarCantidadRecurso(2 * cantidad, 14);
         } else {
             System.out.println("No trabajo ese recurso.");
         }

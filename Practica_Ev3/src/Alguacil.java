@@ -1,0 +1,84 @@
+
+public class Alguacil extends Sujeto implements Dinero, Movimiento {
+
+    private int recaudacion;
+
+    public Alguacil() {
+        super();
+        this.recaudacion = 0;
+    }
+
+    public Alguacil(int id, int cantidadVida, int cantidadMonedas, int posX, int posY, int velocidadMovimiento,
+            int[] cantidadRecursos, int monedas, int recaudacion) {
+        super();
+        this.recaudacion = recaudacion;
+    }
+
+    @Override
+    public String toString() {
+        return "Alguacil{" + "recaudacion=" + recaudacion + '}';
+    }    
+
+    @Override
+    public boolean subir() {
+        if (getPosY() > 0) {
+            setPosY(getPosY() - 1);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean bajar() {
+        if (getPosY() < 49) {
+            setPosY(getPosY() + 1);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean derecha() {
+        if (getPosX() < 49) {
+            setPosX(getPosX() + 1);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean izquierda() {
+        if (getPosX() > 0) {
+            setPosX(getPosX() - 1);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean irA(int posX, int posY) {
+        if (posX < 0 || posX > 49 || posY < 0 || posY > 49) {
+            return false;
+        }
+        setPosX(posX);
+        setPosY(posY);
+        return true;
+    }
+
+    @Override
+    public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad) {
+        if (recurso.getTipo() == TipoRecurso.MONEDAS
+                && sujeto.getCantidadMonedas() >= cantidad) {
+            this.cobrarImpuesto(cantidad);
+            sujeto.quitarCantidadRecurso(cantidad, 14);
+        } else {
+            System.out.println("Paga lo que debes!");
+        }
+    }
+
+    public int cobrarImpuesto(int cantidad) {
+        this.recaudacion += recaudacion;
+        return cantidad;
+    }
+
+}
