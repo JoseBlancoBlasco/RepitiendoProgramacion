@@ -1,12 +1,16 @@
 public class Carnicero extends Sujeto implements Dinero, Movimiento {
+    
+    private double tasaImpuestos;
 
     public Carnicero() {
         super();
+        this.tasaImpuestos = 0;
     }
 
-    public Carnicero(int id, int cantidadVida, int cantidadMonedas, int posX, int posY, int velocidadMovimiento,
-            int[] cantidadRecursos, int monedas) {
+    public Carnicero(int id, int cantidadVida, int posX, int posY, int velocidadMovimiento,
+            double[] cantidadRecursos, double tasaImpuestos) {
         super();
+        this.tasaImpuestos = tasaImpuestos;
     }    
 
     @Override
@@ -108,7 +112,7 @@ public class Carnicero extends Sujeto implements Dinero, Movimiento {
     public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad) {
         if (recurso.getTipo() == TipoRecurso.CARNE 
                 && this.getCantidadRecursos()[4] >= cantidad
-                && sujeto.getCantidadMonedas() >= 5 * cantidad) {
+                && sujeto.getDinero() >= 5 * cantidad) {
             this.agregarCantidadRecurso(5 * cantidad, 14);
             this.quitarCantidadRecurso(cantidad, 4);
             sujeto.agregarCantidadRecurso(cantidad, 4);

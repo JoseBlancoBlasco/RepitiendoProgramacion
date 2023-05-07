@@ -1,17 +1,14 @@
 
-public class Agricultor extends Sujeto implements Dinero, Movimiento {
+public class Agricultor extends Sujeto implements Dinero, Movimiento {    
     
-    private double tasaImpuestos;
 
     public Agricultor() {
         super();
-        this.tasaImpuestos = tasaImpuestos;
     }
 
     public Agricultor(int id, int cantidadVida, int cantidadMonedas, int posX, int posY, int velocidadMovimiento,
             double[] cantidadRecursos, int monedas, double tasaImpuestos) {
         super();
-        this.tasaImpuestos = tasaImpuestos;
     }
 
     @Override

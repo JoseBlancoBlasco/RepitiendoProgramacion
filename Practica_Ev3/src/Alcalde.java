@@ -5,10 +5,16 @@ import java.util.List;
 public class Alcalde extends Sujeto implements Movimiento, Dinero{
 
     private double recaudacion;
-
-    public Alcalde(int id, int cantidadVida, int posX, int posY, int velocidadMovimiento) {
-        super(id, cantidadVida, posX, posY, velocidadMovimiento);
+    
+    public Alcalde(){
+        super();
         this.recaudacion = 0;
+    }
+
+    public Alcalde(int id, int cantidadVida, int posX, int posY, int velocidadMovimiento,
+            double[] cantidadRecursos, double tasaImpuestos, double recaudacion) {
+        super();
+        this.recaudacion = recaudacion;
     }
 
     public void redistribuirImpuestos(List<Alguacil> alguaciles, List<Sujeto> sujetos) {

@@ -7,19 +7,21 @@ public class Sujeto implements Comparable<Sujeto>, Movimiento {
     private int posY;
     private int velocidadMovimiento;
     private double[] cantidadRecursos;
+    private double tasaImpuestos;
 
     //[harina,pescado, oro, bosque, ganado, fruta, verdura, pan, madera, combustible, muebles, carne, truchas, cangrejos, monedas]
     //    0      1      2      3       4      5       6      7      8         9          10      11      12        13       14
     public Sujeto() {
     }
 
-    public Sujeto(int id, int cantidadVida, int posX, int posY, int velocidadMovimiento) {
+    public Sujeto(int id, int cantidadVida, int posX, int posY, int velocidadMovimiento, double[] cantidadRecursos, double tasaImpuestos) {
         this.id = id;
         this.cantidadVida = cantidadVida;
         this.posX = posX;
         this.posY = posY;
         this.velocidadMovimiento = velocidadMovimiento;
         this.cantidadRecursos = new double[15];
+        this.tasaImpuestos = tasaImpuestos;
     }
 
     // Getters y setters
@@ -78,6 +80,16 @@ public class Sujeto implements Comparable<Sujeto>, Movimiento {
     public void setDinero(double dinero) {
         cantidadRecursos[14] = dinero;
     }
+
+    public double getTasaImpuestos() {
+        return tasaImpuestos;
+    }
+
+    public void setTasaImpuestos(double tasaImpuestos) {
+        this.tasaImpuestos = tasaImpuestos;
+    }
+    
+    
 
     // Implementación del método equals()
     @Override

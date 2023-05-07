@@ -9,7 +9,7 @@ public class Alguacil extends Sujeto implements Dinero, Movimiento {
     }
 
     public Alguacil(int id, int cantidadVida, int posX, int posY, int velocidadMovimiento,
-            int[] cantidadRecursos, int monedas, int recaudacion) {
+            int[] cantidadRecursos, int recaudacion) {
         super();
         this.recaudacion = recaudacion;
     }
