@@ -104,8 +104,8 @@ public class Alcalde extends Sujeto implements Movimiento, Dinero{
     }
     
     @Override
-    public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad) {
-        //Implementar
+    public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad, double precio) {
+        System.out.println("Como buen Alcalde que soy, no produzco nada solo hago gasto público.");
     }
     
 }

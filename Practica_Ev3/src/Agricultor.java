@@ -1,14 +1,25 @@
 
-public class Agricultor extends Sujeto implements Dinero, Movimiento {    
-    
+public class Agricultor extends Sujeto implements Dinero, Movimiento {
+
+    private double cajaImpuestos;
 
     public Agricultor() {
         super();
+        this.cajaImpuestos = 0;
     }
 
-    public Agricultor(int id, int cantidadVida, int cantidadMonedas, int posX, int posY, int velocidadMovimiento,
-            double[] cantidadRecursos, int monedas, double tasaImpuestos) {
+    public Agricultor(int id, int cantidadVida, int posX, int posY, int velocidadMovimiento,
+            double[] cantidadRecursos, double tasaImpuestos, double cajaImpuestos) {
         super();
+        this.cajaImpuestos = cajaImpuestos;
+    }
+
+    public double getCajaImpuestos() {
+        return cajaImpuestos;
+    }
+
+    public void setCajaImpuestos(double cajaImpuestos) {
+        this.cajaImpuestos = cajaImpuestos;
     }
 
     @Override
@@ -85,25 +96,68 @@ public class Agricultor extends Sujeto implements Dinero, Movimiento {
         }
     }
 
-    @Override
-    public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad) {
-        if (recurso.getTipo() == TipoRecurso.FRUTA
-                && this.getCantidadRecursos()[5] >= cantidad
-                && sujeto.getDinero() >= 5 * cantidad) {
-            this.agregarCantidadRecurso(3 * cantidad, 14);
-            this.quitarCantidadRecurso(cantidad, 5);
-            sujeto.agregarCantidadRecurso(cantidad, 5);
-            sujeto.quitarCantidadRecurso(3 * cantidad, 14);
-        } else if (recurso.getTipo() == TipoRecurso.VERDURA
-                && this.getCantidadRecursos()[6] >= cantidad
-                && sujeto.getDinero() >= 3 * cantidad) {
-            this.agregarCantidadRecurso(3 * cantidad, 14);
-            this.quitarCantidadRecurso(cantidad, 6);
-            sujeto.agregarCantidadRecurso(cantidad, 6);
-            sujeto.quitarCantidadRecurso(3 * cantidad, 14);
-        } else {
-            System.out.println("No trabajo ese recurso.");
+    public void addCajaImpuestos(double cantidad) {
+        this.cajaImpuestos += cantidad;
+    }
+
+    public class RecursoInsuficienteException extends Exception {
+
+        public RecursoInsuficienteException(String message) {
+            super(message);
         }
     }
-    
+
+    public class DineroInsuficienteException extends Exception {
+
+        public DineroInsuficienteException(String message) {
+            super(message);
+        }
+    }
+
+    @Override
+    public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad, double precio) {
+        try {
+            if (recurso.getTipo() == TipoRecurso.FRUTA
+                    && this.getCantidadRecursos()[5] >= cantidad
+                    && sujeto.getDinero() >= precio * cantidad) {
+                this.agregarCantidadRecurso(precio * cantidad, 14);
+                this.quitarCantidadRecurso(cantidad, 5);
+                addCajaImpuestos(precio * cantidad * getTasaImpuestos());
+                this.quitarCantidadRecurso(precio * cantidad * getTasaImpuestos(), 14);
+                sujeto.agregarCantidadRecurso(cantidad, 5);
+                sujeto.quitarCantidadRecurso(precio * cantidad, 14);
+            } else if (recurso.getTipo() == TipoRecurso.VERDURA
+                    && this.getCantidadRecursos()[6] >= cantidad
+                    && sujeto.getDinero() >= precio * cantidad) {
+                this.agregarCantidadRecurso(precio * cantidad, 14);
+                this.quitarCantidadRecurso(cantidad, 6);
+                addCajaImpuestos(precio * cantidad * getTasaImpuestos());
+                this.quitarCantidadRecurso(precio * cantidad * getTasaImpuestos(), 14);
+                sujeto.agregarCantidadRecurso(cantidad, 6);
+                sujeto.quitarCantidadRecurso(precio * cantidad, 14);
+            } else {
+                if (recurso.getTipo() == TipoRecurso.FRUTA
+                        && this.getCantidadRecursos()[5] < cantidad) {
+                    throw new RecursoInsuficienteException("No hay suficiente FRUTA disponible.");
+                } else if (recurso.getTipo() == TipoRecurso.VERDURA
+                        && this.getCantidadRecursos()[6] < cantidad) {
+                    throw new RecursoInsuficienteException("No hay suficiente VERDURA disponible.");
+                } else {
+                    throw new DineroInsuficienteException("No tienes suficiente dinero.");
+                }
+            }
+        } catch (RecursoInsuficienteException e) {
+            System.out.println(e.getMessage());
+        } catch (DineroInsuficienteException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public double entregarImpuestos() {
+        double entrega = getCajaImpuestos();
+        setCajaImpuestos(0);
+        return entrega;
+    }
+
 }

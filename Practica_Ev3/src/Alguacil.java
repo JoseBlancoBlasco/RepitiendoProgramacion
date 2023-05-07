@@ -1,7 +1,7 @@
 
 public class Alguacil extends Sujeto implements Dinero, Movimiento {
 
-    private int recaudacion;
+    private double recaudacion;
 
     public Alguacil() {
         super();
@@ -14,15 +14,17 @@ public class Alguacil extends Sujeto implements Dinero, Movimiento {
         this.recaudacion = recaudacion;
     }
 
-    public int getRecaudacion() {
+    public double getRecaudacion() {
         return recaudacion;
     }
 
     public void setRecaudacion(int recaudacion) {
         this.recaudacion = recaudacion;
     }
-    
-    
+
+    public void addRecaudacion(double recaudacion) {
+        this.recaudacion += recaudacion;
+    }
 
     @Override
     public String toString() {
@@ -76,15 +78,12 @@ public class Alguacil extends Sujeto implements Dinero, Movimiento {
     }
 
     @Override
-    public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad) {
-        //Implementar
+    public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad, double precio) {
+
     }
 
     public void cobrarImpuestos(Sujeto sujeto) {
-        double impuestos = sujeto.getDinero() * 0.1;
-        recaudacion += impuestos;
-        double nuevoDinero = sujeto.getDinero() - impuestos;
-        sujeto.setDinero(nuevoDinero);
+        addRecaudacion(sujeto.entregarImpuestos());
     }
 
 }

@@ -1,5 +1,5 @@
 
-public class Sujeto implements Comparable<Sujeto>, Movimiento {
+public class Sujeto implements Comparable<Sujeto>, Movimiento, Dinero {
 
     private int id;
     private int cantidadVida;
@@ -14,7 +14,9 @@ public class Sujeto implements Comparable<Sujeto>, Movimiento {
     public Sujeto() {
     }
 
-    public Sujeto(int id, int cantidadVida, int posX, int posY, int velocidadMovimiento, double[] cantidadRecursos, double tasaImpuestos) {
+    public Sujeto(int id, int cantidadVida, int posX, int posY, 
+            int velocidadMovimiento, double[] cantidadRecursos, 
+            double tasaImpuestos) {
         this.id = id;
         this.cantidadVida = cantidadVida;
         this.posX = posX;
@@ -88,8 +90,8 @@ public class Sujeto implements Comparable<Sujeto>, Movimiento {
     public void setTasaImpuestos(double tasaImpuestos) {
         this.tasaImpuestos = tasaImpuestos;
     }
-    
-    
+
+      
 
     // Implementación del método equals()
     @Override
@@ -171,9 +173,27 @@ public class Sujeto implements Comparable<Sujeto>, Movimiento {
     public void agregarCantidadRecurso(int cantidad, int indice) {
         cantidadRecursos[indice] += cantidad;
     }
+    
+    public void agregarCantidadRecurso(double cantidad, int indice) {
+        cantidadRecursos[indice] += cantidad;
+    }
 
     public void quitarCantidadRecurso(int cantidad, int indice) {
         cantidadRecursos[indice] -= cantidad;
     }
+    
+    public void quitarCantidadRecurso(double cantidad, int indice) {
+        cantidadRecursos[indice] -= cantidad;
+    }   
+
+    @Override
+    public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad, double precio) {
+    }
+
+    @Override
+    public double entregarImpuestos() {
+        return 0.0;
+    }
+    
 
 }
