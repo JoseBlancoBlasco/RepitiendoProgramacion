@@ -1,14 +1,18 @@
 
 public class Agricultor extends Sujeto implements Dinero, Movimiento {
     
+    private double tasaImpuestos;
+
     public Agricultor() {
         super();
+        this.tasaImpuestos = tasaImpuestos;
     }
 
     public Agricultor(int id, int cantidadVida, int cantidadMonedas, int posX, int posY, int velocidadMovimiento,
-            int[] cantidadRecursos, int monedas) {
+            double[] cantidadRecursos, int monedas, double tasaImpuestos) {
         super();
-    }    
+        this.tasaImpuestos = tasaImpuestos;
+    }
 
     @Override
     public boolean subir() {
@@ -86,16 +90,16 @@ public class Agricultor extends Sujeto implements Dinero, Movimiento {
 
     @Override
     public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad) {
-        if (recurso.getTipo() == TipoRecurso.FRUTA 
+        if (recurso.getTipo() == TipoRecurso.FRUTA
                 && this.getCantidadRecursos()[5] >= cantidad
-                && sujeto.getCantidadMonedas() >= 5 * cantidad) {
+                && sujeto.getDinero() >= 5 * cantidad) {
             this.agregarCantidadRecurso(3 * cantidad, 14);
             this.quitarCantidadRecurso(cantidad, 5);
             sujeto.agregarCantidadRecurso(cantidad, 5);
             sujeto.quitarCantidadRecurso(3 * cantidad, 14);
         } else if (recurso.getTipo() == TipoRecurso.VERDURA
                 && this.getCantidadRecursos()[6] >= cantidad
-                && sujeto.getCantidadMonedas() >= 3 * cantidad) {
+                && sujeto.getDinero() >= 3 * cantidad) {
             this.agregarCantidadRecurso(3 * cantidad, 14);
             this.quitarCantidadRecurso(cantidad, 6);
             sujeto.agregarCantidadRecurso(cantidad, 6);
@@ -104,4 +108,5 @@ public class Agricultor extends Sujeto implements Dinero, Movimiento {
             System.out.println("No trabajo ese recurso.");
         }
     }
+    
 }

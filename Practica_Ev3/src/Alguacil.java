@@ -8,16 +8,26 @@ public class Alguacil extends Sujeto implements Dinero, Movimiento {
         this.recaudacion = 0;
     }
 
-    public Alguacil(int id, int cantidadVida, int cantidadMonedas, int posX, int posY, int velocidadMovimiento,
+    public Alguacil(int id, int cantidadVida, int posX, int posY, int velocidadMovimiento,
             int[] cantidadRecursos, int monedas, int recaudacion) {
         super();
         this.recaudacion = recaudacion;
     }
 
+    public int getRecaudacion() {
+        return recaudacion;
+    }
+
+    public void setRecaudacion(int recaudacion) {
+        this.recaudacion = recaudacion;
+    }
+    
+    
+
     @Override
     public String toString() {
         return "Alguacil{" + "recaudacion=" + recaudacion + '}';
-    }    
+    }
 
     @Override
     public boolean subir() {
@@ -67,18 +77,14 @@ public class Alguacil extends Sujeto implements Dinero, Movimiento {
 
     @Override
     public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad) {
-        if (recurso.getTipo() == TipoRecurso.MONEDAS
-                && sujeto.getCantidadMonedas() >= cantidad) {
-            this.cobrarImpuesto(cantidad);
-            sujeto.quitarCantidadRecurso(cantidad, 14);
-        } else {
-            System.out.println("Paga lo que debes!");
-        }
+        //Implementar
     }
 
-    public int cobrarImpuesto(int cantidad) {
-        this.recaudacion += recaudacion;
-        return cantidad;
+    public void cobrarImpuestos(Sujeto sujeto) {
+        double impuestos = sujeto.getDinero() * 0.1;
+        recaudacion += impuestos;
+        double nuevoDinero = sujeto.getDinero() - impuestos;
+        sujeto.setDinero(nuevoDinero);
     }
 
 }

@@ -3,26 +3,23 @@ public class Sujeto implements Comparable<Sujeto>, Movimiento {
 
     private int id;
     private int cantidadVida;
-    private int cantidadMonedas;
     private int posX;
     private int posY;
     private int velocidadMovimiento;
-    private int[] cantidadRecursos;
+    private double[] cantidadRecursos;
 
     //[harina,pescado, oro, bosque, ganado, fruta, verdura, pan, madera, combustible, muebles, carne, truchas, cangrejos, monedas]
     //    0      1      2      3       4      5       6      7      8         9          10      11      12        13       14
-    
     public Sujeto() {
     }
 
-    public Sujeto(int id, int cantidadVida, int cantidadMonedas, int posX, int posY, int velocidadMovimiento) {
+    public Sujeto(int id, int cantidadVida, int posX, int posY, int velocidadMovimiento) {
         this.id = id;
         this.cantidadVida = cantidadVida;
-        this.cantidadMonedas = cantidadMonedas;
         this.posX = posX;
         this.posY = posY;
         this.velocidadMovimiento = velocidadMovimiento;
-        this.cantidadRecursos = new int[15];
+        this.cantidadRecursos = new double[15];
     }
 
     // Getters y setters
@@ -40,14 +37,6 @@ public class Sujeto implements Comparable<Sujeto>, Movimiento {
 
     public void setCantidadVida(int cantidadVida) {
         this.cantidadVida = cantidadVida;
-    }
-
-    public int getCantidadMonedas() {
-        return cantidadMonedas;
-    }
-
-    public void setCantidadMonedas(int cantidadMonedas) {
-        this.cantidadMonedas = cantidadMonedas;
     }
 
     public int getPosX() {
@@ -74,12 +63,20 @@ public class Sujeto implements Comparable<Sujeto>, Movimiento {
         this.velocidadMovimiento = velocidadMovimiento;
     }
 
-    public int[] getCantidadRecursos() {
+    public double[] getCantidadRecursos() {
         return cantidadRecursos;
     }
 
-    public void setCantidadRecursos(int[] cantidadRecursos) {
+    public void setCantidadRecursos(double[] cantidadRecursos) {
         this.cantidadRecursos = cantidadRecursos;
+    }
+
+    public double getDinero() {
+        return cantidadRecursos[14];
+    }
+
+    public void setDinero(double dinero) {
+        cantidadRecursos[14] = dinero;
     }
 
     // Implementación del método equals()
