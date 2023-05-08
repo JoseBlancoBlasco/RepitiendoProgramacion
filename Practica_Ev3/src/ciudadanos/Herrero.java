@@ -102,24 +102,31 @@ public class Herrero extends Sujeto implements Dinero, Movimiento {
         switch (recurso.getTipo()) {
             case HARINA:
                 agregarCantidadRecurso(1, 0);
+                recurso.extraerRecurso(1);
                 break;
             case PEZ:
                 agregarCantidadRecurso(1, 1);
+                recurso.extraerRecurso(1);
                 break;
             case ORO:
                 agregarCantidadRecurso(5, 2);
+                recurso.extraerRecurso(5);
                 break;
             case BOSQUE:
                 agregarCantidadRecurso(1, 3);
+                recurso.extraerRecurso(1);
                 break;
             case GANADO:
                 agregarCantidadRecurso(1, 4);
+                recurso.extraerRecurso(1);
                 break;
             case FRUTA:
                 agregarCantidadRecurso(1, 5);
+                recurso.extraerRecurso(1);
                 break;
             case VERDURA:
                 agregarCantidadRecurso(1, 6);
+                recurso.extraerRecurso(1);
                 break;
             default:
                 break;

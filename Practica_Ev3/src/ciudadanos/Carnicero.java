@@ -102,24 +102,31 @@ public class Carnicero extends Sujeto implements Dinero, Movimiento {
         switch (recurso.getTipo()) {
             case HARINA:
                 agregarCantidadRecurso(1, 0);
+                recurso.extraerRecurso(1);
                 break;
             case PEZ:
                 agregarCantidadRecurso(1, 1);
+                recurso.extraerRecurso(1);
                 break;
             case ORO:
                 agregarCantidadRecurso(1, 2);
+                recurso.extraerRecurso(1);
                 break;
             case BOSQUE:
                 agregarCantidadRecurso(1, 3);
+                recurso.extraerRecurso(1);
                 break;
             case GANADO:
                 agregarCantidadRecurso(10, 4);
+                recurso.extraerRecurso(10);
                 break;
             case FRUTA:
                 agregarCantidadRecurso(2, 5);
+                recurso.extraerRecurso(2);
                 break;
             case VERDURA:
                 agregarCantidadRecurso(2, 6);
+                recurso.extraerRecurso(2);
                 break;
             default:
                 break;

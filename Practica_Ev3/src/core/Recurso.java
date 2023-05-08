@@ -1,9 +1,5 @@
 package core;
 
-
-import core.TipoRecurso;
-
-
 public class Recurso {
 
     private int cantidad;

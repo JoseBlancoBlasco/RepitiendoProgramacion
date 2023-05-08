@@ -81,24 +81,31 @@ public class Agricultor extends Sujeto implements Dinero, Movimiento {
         switch (recurso.getTipo()) {
             case HARINA:
                 agregarCantidadRecurso(1, 0);
+                recurso.extraerRecurso(1);
                 break;
             case PEZ:
                 agregarCantidadRecurso(3, 1);
+                recurso.extraerRecurso(3);
                 break;
             case ORO:
                 agregarCantidadRecurso(1, 2);
+                recurso.extraerRecurso(1);
                 break;
             case BOSQUE:
                 agregarCantidadRecurso(1, 3);
+                recurso.extraerRecurso(1);
                 break;
             case GANADO:
                 agregarCantidadRecurso(3, 4);
+                recurso.extraerRecurso(3);
                 break;
             case FRUTA:
                 agregarCantidadRecurso(10, 5);
+                recurso.extraerRecurso(10);
                 break;
             case VERDURA:
                 agregarCantidadRecurso(10, 6);
+                recurso.extraerRecurso(10);
                 break;
             default:
                 break;
