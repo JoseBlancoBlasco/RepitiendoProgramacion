@@ -1,13 +1,24 @@
+package core;
 
 public class Tablero {
 
     private static final int TAMANIO = 50; // tamaño fijo del tablero
     private int[][] tablero;
+    private Recurso[][] recursos;
 
     public Tablero() {
         tablero = new int[TAMANIO][TAMANIO];
+        recursos = new Recurso[TAMANIO][TAMANIO];
     }
-    
+
+    public Recurso[][] getRecursos() {
+        return recursos;
+    }
+
+    public void setRecursos(Recurso[][] recursos) {
+        this.recursos = recursos;
+    }    
+
     public int[][] getTablero() {
         return tablero;
     }
@@ -15,7 +26,7 @@ public class Tablero {
     public void setTablero(int[][] tablero) {
         this.tablero = tablero;
     }
-    
+
     public int getValor(int fila, int columna) {
         return tablero[fila][columna];
     }
@@ -60,32 +71,37 @@ public class Tablero {
     public void pintarTablero() {
         for (int fila = 0; fila < TAMANIO; fila++) {
             for (int columna = 0; columna < TAMANIO; columna++) {
-                int valor = tablero[fila][columna];
-                switch (valor) {
-                    case 0:
-                        System.out.print(" . "); // Casilla vacía
-                        break;
-                    case 1:
-                        System.out.print(" 🐟 "); // Recurso pez
-                        break;
-                    case 2:
-                        System.out.print(" 🥇 "); // Recurso oro
-                        break;
-                    case 3:
-                        System.out.print(" 🌳 "); // Recurso bosque
-                        break;
-                    case 4:
-                        System.out.print(" 🐄 "); // Recurso ganado
-                        break;
-                    case 5:
-                        System.out.print(" 🍎 "); // Recurso fruta
-                        break;
-                    case 6:
-                        System.out.print(" 🥕 "); // Recurso verdura
-                        break;
+                if (recursos[fila][columna] != null) {
+                    Recurso recurso = recursos[fila][columna];
+                    TipoRecurso tipo = recurso.getTipo();
+                    switch (tipo) {
+                        case PEZ:
+                            System.out.print("🐟");  // Representación del recurso pez
+                            break;
+                        case ORO:
+                            System.out.print("💰");  // Representación del recurso oro
+                            break;
+                        case BOSQUE:
+                            System.out.print("🌳");  // Representación del recurso bosque
+                            break;
+                        case GANADO:
+                            System.out.print("🐄");  // Representación del recurso ganado
+                            break;
+                        case FRUTA:
+                            System.out.print("🍎");  // Representación del recurso fruta
+                            break;
+                        case VERDURA:
+                            System.out.print("🥦");  // Representación del recurso verdura
+                            break;
+                        default:
+                            System.out.print(" ");  // Representación de una posición vacía
+                            break;
+                    }
+                } else {
+                    System.out.print(" ");  // Representación de una posición vacía
                 }
             }
-            System.out.println(); // Nueva línea después de cada fila
+            System.out.println();  // Salto de línea al final de cada fila
         }
     }
 

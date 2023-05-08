@@ -1,3 +1,5 @@
+package core;
+
 
 public class Sujeto implements Comparable<Sujeto>, Movimiento, Dinero {
 

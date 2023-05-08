@@ -1,19 +1,28 @@
+package ciudadanos;
 
-public class Carpintero extends Sujeto implements Dinero, Movimiento {
+
+import core.Recurso;
+import core.TipoRecurso;
+import core.Dinero;
+import core.Movimiento;
+import core.Sujeto;
+
+
+public class Agricultor extends Sujeto implements Dinero, Movimiento {
 
     private double cajaImpuestos;
-    
-    public Carpintero() {
+
+    public Agricultor() {
         super();
         this.cajaImpuestos = 0;
     }
 
-    public Carpintero(int id, int cantidadVida, int posX, int posY, int velocidadMovimiento,
+    public Agricultor(int id, int cantidadVida, int posX, int posY, int velocidadMovimiento,
             double[] cantidadRecursos, double tasaImpuestos, double cajaImpuestos) {
         super();
         this.cajaImpuestos = cajaImpuestos;
     }
-    
+
     public double getCajaImpuestos() {
         return cajaImpuestos;
     }
@@ -68,49 +77,28 @@ public class Carpintero extends Sujeto implements Dinero, Movimiento {
         return true;
     }
 
-    public int maderaEnMuebles(Sujeto sujeto, int cantidad) {
-        if (cantidad > 0 
-                && sujeto instanceof Carpintero 
-                && sujeto.getCantidadRecursos()[8] >= cantidad) {
-            int mueblesObtenidos = cantidad * 10;
-            sujeto.quitarCantidadRecurso(cantidad, 10);
-            this.agregarCantidadRecurso(cantidad, 10);
-            return mueblesObtenidos;
-        } else if (cantidad > 0 
-                && !(sujeto instanceof Carpintero) 
-                && sujeto.getCantidadRecursos()[8] >= cantidad) {
-            int mueblesObtenido = cantidad * 10;
-            sujeto.quitarCantidadRecurso(cantidad, 10);
-            this.agregarCantidadRecurso(cantidad - 5, cantidad); //impuesto por transformar
-            sujeto.agregarCantidadRecurso(mueblesObtenido - 5, 10);
-            return mueblesObtenido - 5;
-        } else {
-            return 0;
-        }
-    }
-
     public void recolectarRecurso(Recurso recurso) {
         switch (recurso.getTipo()) {
             case HARINA:
                 agregarCantidadRecurso(1, 0);
                 break;
             case PEZ:
-                agregarCantidadRecurso(1, 1);
+                agregarCantidadRecurso(3, 1);
                 break;
             case ORO:
-                agregarCantidadRecurso(3, 2);
+                agregarCantidadRecurso(1, 2);
                 break;
             case BOSQUE:
-                agregarCantidadRecurso(3, 3);
+                agregarCantidadRecurso(1, 3);
                 break;
             case GANADO:
-                agregarCantidadRecurso(1, 4);
+                agregarCantidadRecurso(3, 4);
                 break;
             case FRUTA:
-                agregarCantidadRecurso(1, 5);
+                agregarCantidadRecurso(10, 5);
                 break;
             case VERDURA:
-                agregarCantidadRecurso(1, 6);
+                agregarCantidadRecurso(10, 6);
                 break;
             default:
                 break;
@@ -138,19 +126,31 @@ public class Carpintero extends Sujeto implements Dinero, Movimiento {
     @Override
     public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad, double precio) {
         try {
-            if (recurso.getTipo() == TipoRecurso.MUEBLES
-                    && this.getCantidadRecursos()[10] >= cantidad
+            if (recurso.getTipo() == TipoRecurso.FRUTA
+                    && this.getCantidadRecursos()[5] >= cantidad
                     && sujeto.getDinero() >= precio * cantidad) {
                 this.agregarCantidadRecurso(precio * cantidad, 14);
-                this.quitarCantidadRecurso(cantidad, 10);
+                this.quitarCantidadRecurso(cantidad, 5);
                 addCajaImpuestos(precio * cantidad * getTasaImpuestos());
                 this.quitarCantidadRecurso(precio * cantidad * getTasaImpuestos(), 14);
-                sujeto.agregarCantidadRecurso(cantidad, 10);
+                sujeto.agregarCantidadRecurso(cantidad, 5);
+                sujeto.quitarCantidadRecurso(precio * cantidad, 14);
+            } else if (recurso.getTipo() == TipoRecurso.VERDURA
+                    && this.getCantidadRecursos()[6] >= cantidad
+                    && sujeto.getDinero() >= precio * cantidad) {
+                this.agregarCantidadRecurso(precio * cantidad, 14);
+                this.quitarCantidadRecurso(cantidad, 6);
+                addCajaImpuestos(precio * cantidad * getTasaImpuestos());
+                this.quitarCantidadRecurso(precio * cantidad * getTasaImpuestos(), 14);
+                sujeto.agregarCantidadRecurso(cantidad, 6);
                 sujeto.quitarCantidadRecurso(precio * cantidad, 14);
             } else {
-                if (recurso.getTipo() == TipoRecurso.MUEBLES
-                        && this.getCantidadRecursos()[10] < cantidad) {
-                    throw new RecursoInsuficienteException("No hay suficientes MUEBLES disponible.");
+                if (recurso.getTipo() == TipoRecurso.FRUTA
+                        && this.getCantidadRecursos()[5] < cantidad) {
+                    throw new RecursoInsuficienteException("No hay suficiente FRUTA disponible.");
+                } else if (recurso.getTipo() == TipoRecurso.VERDURA
+                        && this.getCantidadRecursos()[6] < cantidad) {
+                    throw new RecursoInsuficienteException("No hay suficiente VERDURA disponible.");
                 } else {
                     throw new DineroInsuficienteException("No tienes suficiente dinero.");
                 }
@@ -168,5 +168,4 @@ public class Carpintero extends Sujeto implements Dinero, Movimiento {
         setCajaImpuestos(0);
         return entrega;
     }
-
 }

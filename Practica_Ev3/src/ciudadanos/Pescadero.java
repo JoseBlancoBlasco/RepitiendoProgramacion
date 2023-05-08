@@ -1,19 +1,27 @@
+package ciudadanos;
 
-public class Agricultor extends Sujeto implements Dinero, Movimiento {
+import core.Recurso;
+import core.Dinero;
+import core.Movimiento;
+import core.Sujeto;
+import core.TipoRecurso;
 
+
+public class Pescadero extends Sujeto implements Dinero, Movimiento {
+    
     private double cajaImpuestos;
 
-    public Agricultor() {
+    public Pescadero() {
         super();
         this.cajaImpuestos = 0;
     }
 
-    public Agricultor(int id, int cantidadVida, int posX, int posY, int velocidadMovimiento,
+    public Pescadero(int id, int cantidadVida, int posX, int posY, int velocidadMovimiento,
             double[] cantidadRecursos, double tasaImpuestos, double cajaImpuestos) {
         super();
         this.cajaImpuestos = cajaImpuestos;
-    }
-
+    }  
+    
     public double getCajaImpuestos() {
         return cajaImpuestos;
     }
@@ -74,7 +82,7 @@ public class Agricultor extends Sujeto implements Dinero, Movimiento {
                 agregarCantidadRecurso(1, 0);
                 break;
             case PEZ:
-                agregarCantidadRecurso(3, 1);
+                agregarCantidadRecurso(10, 1);
                 break;
             case ORO:
                 agregarCantidadRecurso(1, 2);
@@ -86,13 +94,55 @@ public class Agricultor extends Sujeto implements Dinero, Movimiento {
                 agregarCantidadRecurso(3, 4);
                 break;
             case FRUTA:
-                agregarCantidadRecurso(10, 5);
+                agregarCantidadRecurso(1, 5);
                 break;
             case VERDURA:
-                agregarCantidadRecurso(10, 6);
+                agregarCantidadRecurso(1, 6);
                 break;
             default:
                 break;
+        }
+    }
+
+    public int pescadoEnTrucha(Sujeto sujeto, int cantidad) {
+        if (cantidad > 0 
+                && sujeto instanceof Pescadero 
+                && sujeto.getCantidadRecursos()[1] >= cantidad) {
+            int maderaObtenida = cantidad * 10;
+            sujeto.quitarCantidadRecurso(cantidad, 1);
+            this.agregarCantidadRecurso(maderaObtenida, 12);
+            return maderaObtenida;
+        } else if (cantidad > 0 
+                && !(sujeto instanceof Pescadero) 
+                && sujeto.getCantidadRecursos()[3] >= cantidad) {
+            int maderaObtenida = cantidad * 10;
+            sujeto.quitarCantidadRecurso(cantidad, 1);
+            this.agregarCantidadRecurso(5, 12); //impuesto por transformar
+            sujeto.agregarCantidadRecurso(maderaObtenida - 5, 12);
+            return maderaObtenida - 5;
+        } else {
+            return 0;
+        }
+    }
+    
+    public int pescadoEnCangrejo(Sujeto sujeto, int cantidad) {
+        if (cantidad > 0 
+                && sujeto instanceof Pescadero 
+                && sujeto.getCantidadRecursos()[1] >= cantidad) {
+            int combustibleObtenido = cantidad * 10;
+            sujeto.quitarCantidadRecurso(cantidad, 13);
+            this.agregarCantidadRecurso(combustibleObtenido, 13);
+            return combustibleObtenido;
+        } else if (cantidad > 0 
+                && !(sujeto instanceof Leñador) 
+                && sujeto.getCantidadRecursos()[1] >= cantidad) {
+            int combustibleObtenido = cantidad * 10;
+            sujeto.quitarCantidadRecurso(cantidad, 1);
+            this.agregarCantidadRecurso(combustibleObtenido, 13); //impuesto por transformar
+            sujeto.agregarCantidadRecurso(combustibleObtenido - 5, 13);
+            return combustibleObtenido - 5;
+        } else {
+            return 0;
         }
     }
 
@@ -117,31 +167,31 @@ public class Agricultor extends Sujeto implements Dinero, Movimiento {
     @Override
     public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad, double precio) {
         try {
-            if (recurso.getTipo() == TipoRecurso.FRUTA
-                    && this.getCantidadRecursos()[5] >= cantidad
+            if (recurso.getTipo() == TipoRecurso.TRUCHAS
+                    && this.getCantidadRecursos()[12] >= cantidad
                     && sujeto.getDinero() >= precio * cantidad) {
                 this.agregarCantidadRecurso(precio * cantidad, 14);
-                this.quitarCantidadRecurso(cantidad, 5);
+                this.quitarCantidadRecurso(cantidad, 12);
                 addCajaImpuestos(precio * cantidad * getTasaImpuestos());
                 this.quitarCantidadRecurso(precio * cantidad * getTasaImpuestos(), 14);
-                sujeto.agregarCantidadRecurso(cantidad, 5);
+                sujeto.agregarCantidadRecurso(cantidad, 12);
                 sujeto.quitarCantidadRecurso(precio * cantidad, 14);
-            } else if (recurso.getTipo() == TipoRecurso.VERDURA
-                    && this.getCantidadRecursos()[6] >= cantidad
+            } else if (recurso.getTipo() == TipoRecurso.CANGREJOS
+                    && this.getCantidadRecursos()[13] >= cantidad
                     && sujeto.getDinero() >= precio * cantidad) {
                 this.agregarCantidadRecurso(precio * cantidad, 14);
-                this.quitarCantidadRecurso(cantidad, 6);
+                this.quitarCantidadRecurso(cantidad, 13);
                 addCajaImpuestos(precio * cantidad * getTasaImpuestos());
                 this.quitarCantidadRecurso(precio * cantidad * getTasaImpuestos(), 14);
-                sujeto.agregarCantidadRecurso(cantidad, 6);
+                sujeto.agregarCantidadRecurso(cantidad, 13);
                 sujeto.quitarCantidadRecurso(precio * cantidad, 14);
             } else {
-                if (recurso.getTipo() == TipoRecurso.FRUTA
-                        && this.getCantidadRecursos()[5] < cantidad) {
-                    throw new RecursoInsuficienteException("No hay suficiente FRUTA disponible.");
-                } else if (recurso.getTipo() == TipoRecurso.VERDURA
-                        && this.getCantidadRecursos()[6] < cantidad) {
-                    throw new RecursoInsuficienteException("No hay suficiente VERDURA disponible.");
+                if (recurso.getTipo() == TipoRecurso.TRUCHAS
+                        && this.getCantidadRecursos()[12] < cantidad) {
+                    throw new RecursoInsuficienteException("No hay suficientes TRUCHAS disponibles.");
+                } else if (recurso.getTipo() == TipoRecurso.CANGREJOS
+                        && this.getCantidadRecursos()[13] < cantidad) {
+                    throw new RecursoInsuficienteException("No hay suficientes CANGREJOS disponibles.");
                 } else {
                     throw new DineroInsuficienteException("No tienes suficiente dinero.");
                 }

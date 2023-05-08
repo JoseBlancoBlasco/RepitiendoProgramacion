@@ -1,4 +1,10 @@
+package ciudadanos;
 
+
+import core.Recurso;
+import core.Dinero;
+import core.Movimiento;
+import core.Sujeto;
 import java.util.List;
 
 

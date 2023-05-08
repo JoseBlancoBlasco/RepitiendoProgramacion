@@ -1,17 +1,34 @@
+package ciudadanos;
+
+
+import core.Recurso;
+import core.TipoRecurso;
+import core.Dinero;
+import core.Movimiento;
+import core.Sujeto;
+
 
 public class Panadero extends Sujeto implements Dinero, Movimiento {
 
-    private int monedas;
+    private double cajaImpuestos;
 
     public Panadero() {
         super();
-        this.monedas = 0;
+        this.cajaImpuestos = 0;
     }
 
-    public Panadero(int id, int cantidadVida, int cantidadMonedas, int posX, int posY, int velocidadMovimiento,
-            int[] cantidadRecursos, int monedas) {
+    public Panadero(int id, int cantidadVida, int posX, int posY, int velocidadMovimiento,
+            double[] cantidadRecursos, double tasaImpuestos, double cajaImpuestos) {
         super();
-        this.monedas = monedas;
+        this.cajaImpuestos = cajaImpuestos;
+    }
+    
+    public double getCajaImpuestos() {
+        return cajaImpuestos;
+    }
+
+    public void setCajaImpuestos(double cajaImpuestos) {
+        this.cajaImpuestos = cajaImpuestos;
     }
 
     @Override
@@ -107,18 +124,56 @@ public class Panadero extends Sujeto implements Dinero, Movimiento {
         }
     }
 
-    @Override
-    public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad) {
-        if (recurso.getTipo() == TipoRecurso.HARINA 
-                && this.getCantidadRecursos()[7] >= cantidad
-                && sujeto.getCantidadMonedas() >= 2 * cantidad) {
-            this.agregarCantidadRecurso(4 * cantidad, 14);
-            this.quitarCantidadRecurso(cantidad, 7);
-            sujeto.agregarCantidadRecurso(cantidad, 7);
-            sujeto.quitarCantidadRecurso(4 * cantidad, 14);
-        } else {
-            System.out.println("No trabajo ese recurso.");
+    public void addCajaImpuestos(double cantidad) {
+        this.cajaImpuestos += cantidad;
+    }
+
+    public class RecursoInsuficienteException extends Exception {
+
+        public RecursoInsuficienteException(String message) {
+            super(message);
         }
+    }
+
+    public class DineroInsuficienteException extends Exception {
+
+        public DineroInsuficienteException(String message) {
+            super(message);
+        }
+    }
+
+    @Override
+    public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad, double precio) {
+        try {
+            if (recurso.getTipo() == TipoRecurso.HARINA
+                    && this.getCantidadRecursos()[0] >= cantidad
+                    && sujeto.getDinero() >= precio * cantidad) {
+                this.agregarCantidadRecurso(precio * cantidad, 14);
+                this.quitarCantidadRecurso(cantidad, 0);
+                addCajaImpuestos(precio * cantidad * getTasaImpuestos());
+                this.quitarCantidadRecurso(precio * cantidad * getTasaImpuestos(), 14);
+                sujeto.agregarCantidadRecurso(cantidad, 0);
+                sujeto.quitarCantidadRecurso(precio * cantidad, 14);
+            } else {
+                if (recurso.getTipo() == TipoRecurso.CARNE
+                        && this.getCantidadRecursos()[0] < cantidad) {
+                    throw new RecursoInsuficienteException("No hay suficiente HARINA disponible.");
+                } else {
+                    throw new DineroInsuficienteException("No tienes suficiente dinero.");
+                }
+            }
+        } catch (RecursoInsuficienteException e) {
+            System.out.println(e.getMessage());
+        } catch (DineroInsuficienteException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public double entregarImpuestos() {
+        double entrega = getCajaImpuestos();
+        setCajaImpuestos(0);
+        return entrega;
     }
 
 }

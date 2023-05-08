@@ -1,3 +1,11 @@
+package ciudadanos;
+
+
+import core.Recurso;
+import core.Dinero;
+import core.Movimiento;
+import core.Sujeto;
+
 
 public class Alguacil extends Sujeto implements Dinero, Movimiento {
 

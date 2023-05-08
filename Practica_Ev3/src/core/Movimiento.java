@@ -1,3 +1,5 @@
+package core;
+
 public interface Movimiento {
     boolean subir();
     boolean bajar();

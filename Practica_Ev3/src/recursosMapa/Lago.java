@@ -1,9 +1,15 @@
+package recursosMapa;
 
-public class Fuente extends Agua {
+
+import core.Agua;
+import core.Recurso;
+
+
+public class Lago extends Agua {
 
     private Recurso recurso;
 
-    public Fuente(int posX, int posY, Recurso recurso) {
+    public Lago(int posX, int posY, Recurso recurso) {
         super(posX, posY);
         this.recurso = recurso;
     }

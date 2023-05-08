@@ -1,3 +1,9 @@
+package recursosMapa;
+
+
+import core.Agua;
+import core.Recurso;
+
 
 public class Pozo extends Agua {
 

@@ -1,3 +1,12 @@
+package ciudadanos;
+
+
+import core.Recurso;
+import core.TipoRecurso;
+import core.Dinero;
+import core.Movimiento;
+import core.Sujeto;
+
 
 public class Carnicero extends Sujeto implements Dinero, Movimiento {
 
