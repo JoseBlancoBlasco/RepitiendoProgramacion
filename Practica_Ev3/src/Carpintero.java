@@ -1,13 +1,25 @@
 
 public class Carpintero extends Sujeto implements Dinero, Movimiento {
 
+    private double cajaImpuestos;
+    
     public Carpintero() {
-        super();        
+        super();
+        this.cajaImpuestos = 0;
     }
 
-    public Carpintero(int id, int cantidadVida, int cantidadMonedas, int posX, int posY, int velocidadMovimiento,
-            int[] cantidadRecursos, int monedas) {
-        super();        
+    public Carpintero(int id, int cantidadVida, int posX, int posY, int velocidadMovimiento,
+            double[] cantidadRecursos, double tasaImpuestos, double cajaImpuestos) {
+        super();
+        this.cajaImpuestos = cajaImpuestos;
+    }
+    
+    public double getCajaImpuestos() {
+        return cajaImpuestos;
+    }
+
+    public void setCajaImpuestos(double cajaImpuestos) {
+        this.cajaImpuestos = cajaImpuestos;
     }
 
     @Override
@@ -105,18 +117,56 @@ public class Carpintero extends Sujeto implements Dinero, Movimiento {
         }
     }
 
-    @Override
-    public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad) {
-        if (recurso.getTipo() == TipoRecurso.MUEBLES
-                && this.getCantidadRecursos()[10] >= cantidad
-                && sujeto.getCantidadMonedas() >= 2 * cantidad) {
-            this.agregarCantidadRecurso(2 * cantidad, 14);
-            this.quitarCantidadRecurso(cantidad, 10);
-            sujeto.agregarCantidadRecurso(cantidad, 10);
-            sujeto.quitarCantidadRecurso(2 * cantidad, 14);
-        } else {
-            System.out.println("No trabajo ese recurso.");
+    public void addCajaImpuestos(double cantidad) {
+        this.cajaImpuestos += cantidad;
+    }
+
+    public class RecursoInsuficienteException extends Exception {
+
+        public RecursoInsuficienteException(String message) {
+            super(message);
         }
+    }
+
+    public class DineroInsuficienteException extends Exception {
+
+        public DineroInsuficienteException(String message) {
+            super(message);
+        }
+    }
+
+    @Override
+    public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad, double precio) {
+        try {
+            if (recurso.getTipo() == TipoRecurso.MUEBLES
+                    && this.getCantidadRecursos()[10] >= cantidad
+                    && sujeto.getDinero() >= precio * cantidad) {
+                this.agregarCantidadRecurso(precio * cantidad, 14);
+                this.quitarCantidadRecurso(cantidad, 10);
+                addCajaImpuestos(precio * cantidad * getTasaImpuestos());
+                this.quitarCantidadRecurso(precio * cantidad * getTasaImpuestos(), 14);
+                sujeto.agregarCantidadRecurso(cantidad, 10);
+                sujeto.quitarCantidadRecurso(precio * cantidad, 14);
+            } else {
+                if (recurso.getTipo() == TipoRecurso.MUEBLES
+                        && this.getCantidadRecursos()[10] < cantidad) {
+                    throw new RecursoInsuficienteException("No hay suficientes MUEBLES disponible.");
+                } else {
+                    throw new DineroInsuficienteException("No tienes suficiente dinero.");
+                }
+            }
+        } catch (RecursoInsuficienteException e) {
+            System.out.println(e.getMessage());
+        } catch (DineroInsuficienteException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public double entregarImpuestos() {
+        double entrega = getCajaImpuestos();
+        setCajaImpuestos(0);
+        return entrega;
     }
 
 }

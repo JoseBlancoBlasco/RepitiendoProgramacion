@@ -159,5 +159,4 @@ public class Agricultor extends Sujeto implements Dinero, Movimiento {
         setCajaImpuestos(0);
         return entrega;
     }
-
 }
