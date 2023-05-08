@@ -1,11 +1,9 @@
 package ciudadanos;
 
-
 import core.Recurso;
 import core.Dinero;
 import core.Movimiento;
 import core.Sujeto;
-
 
 public class Alguacil extends Sujeto implements Dinero, Movimiento {
 
@@ -92,6 +90,12 @@ public class Alguacil extends Sujeto implements Dinero, Movimiento {
 
     public void cobrarImpuestos(Sujeto sujeto) {
         addRecaudacion(sujeto.entregarImpuestos());
+    }
+
+    public void entregarRecaudacion(Alcalde alcalde) {
+        alcalde.setRecaudacion(alcalde.getRecaudacion() + getRecaudacion());
+        setRecaudacion(0);
+        System.out.println("Aqui tiene el dinero del pueblo querido emérito.");
     }
 
 }

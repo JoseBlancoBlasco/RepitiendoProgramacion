@@ -1,15 +1,7 @@
 package core;
 
 
-import ciudadanos.Herrero;
-import ciudadanos.Carnicero;
-import ciudadanos.Carpintero;
-import ciudadanos.Alguacil;
-import ciudadanos.Agricultor;
-import ciudadanos.Panadero;
-import ciudadanos.Leñador;
-import core.Sujeto;
-import ciudadanos.Pescadero;
+import ciudadanos.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -20,6 +12,7 @@ public class GestionImpuestos {
     public static void main(String[] args) {
         List<Sujeto> sujetos = new ArrayList<>();
         List<Alguacil> alguaciles = new ArrayList<>();
+        List<Alcalde> alcaldes = new ArrayList<>();
 
         // Agregar sujetos a la colección
         Agricultor agricultor = new Agricultor();

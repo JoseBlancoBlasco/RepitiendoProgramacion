@@ -1,18 +1,16 @@
 package ciudadanos;
 
-
 import core.Recurso;
 import core.Dinero;
 import core.Movimiento;
 import core.Sujeto;
 import java.util.List;
 
-
-public class Alcalde extends Sujeto implements Movimiento, Dinero{
+public class Alcalde extends Sujeto implements Movimiento, Dinero {
 
     private double recaudacion;
-    
-    public Alcalde(){
+
+    public Alcalde() {
         super();
         this.recaudacion = 0;
     }
@@ -62,7 +60,7 @@ public class Alcalde extends Sujeto implements Movimiento, Dinero{
     public void setRecaudacion(double recaudacion) {
         this.recaudacion = recaudacion;
     }
-    
+
     @Override
     public boolean subir() {
         if (getPosY() > 0) {
@@ -108,10 +106,33 @@ public class Alcalde extends Sujeto implements Movimiento, Dinero{
         setPosY(posY);
         return true;
     }
-    
+
     @Override
     public void transaccion(Sujeto sujeto, Recurso recurso, int cantidad, double precio) {
         System.out.println("Como buen Alcalde que soy, no produzco nada solo hago gasto público.");
     }
-    
+
+    public void repartirRecaudacion(List<Sujeto> sujetos, List<Alguacil> alguaciles, List<Alcalde> alcaldes, double recaudacion) {
+        if (sujetos.isEmpty() && alguaciles.isEmpty() && alcaldes.isEmpty()) {
+            System.out.println("No hay ciudadanos para repartir la recaudación.");
+            return;
+        }
+
+        double recaudacionPorSujeto = recaudacion / (sujetos.size() + alguaciles.size() + alcaldes.size());
+
+        for (Sujeto sujeto : sujetos) {
+            sujeto.agregarCantidadRecurso(recaudacionPorSujeto, 14);
+        }
+
+        for (Alguacil alguacil : alguaciles) {
+            alguacil.agregarCantidadRecurso(recaudacionPorSujeto, 14);
+        }
+        
+        for (Alcalde alcalde : alcaldes) {
+            alcalde.agregarCantidadRecurso(recaudacionPorSujeto, 14);
+        }
+
+        System.out.println("Recaudación repartida entre los ciudadanos exitosamente.");
+    }
+
 }
