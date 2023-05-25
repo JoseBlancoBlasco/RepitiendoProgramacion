@@ -1,7 +1,10 @@
 
 package Ej8_19;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -51,6 +54,23 @@ public class GestionRepuestos {
     public static void main(String[] args) {
         GestionRepuestos gestionRepuestos = new GestionRepuestos();
         Scanner scanner = new Scanner(System.in);
+        
+        List<String> ogt = new ArrayList<>();
+        ogt.add("Hola");
+        ogt.add("que");
+        ogt.add("estas");
+        ogt.add("hoy");
+        ogt.add("makina?");
+        ogt.add(2, "tal");
+        
+        for (String elemento : ogt) {
+            System.out.println(elemento);
+        }
+        
+        Iterator<String> iter = ogt.iterator();
+        while(iter.hasNext()){
+            System.out.println(iter.next());
+        }
 
         int opcion;
         do {
